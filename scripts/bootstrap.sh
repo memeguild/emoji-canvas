@@ -29,6 +29,16 @@ if [[ ! `which virtualenv` ]]; then
     exit 1
 fi
 
+if [ ! -f config.json ]; then
+    echo "Creating config.json..."
+    cat <<EOT >> config.json
+{
+    "clientId": "<insert-your-client-id-here>",
+    "clientSecret": "<insert-your-client-secret-here>"
+}
+EOT
+fi
+
 echo "Creating virtualenv..."
 
 virtualenv emojicanvasenv
