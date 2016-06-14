@@ -79,10 +79,3 @@ gulp.task('watch', function beginWatch(){
         gutil.log('waiting for changes...');
     });
 });
-
-gulp.task('build', function beginBuild(){
-    runSequence(['cp:images', 'build:css', 'build:src'],
-            function completeWatch(){
-        gutil.log('finished building!');
-    ));
-});

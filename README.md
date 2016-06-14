@@ -12,6 +12,10 @@ It is expected that you have the following installed:
 
 Run `./scripts/bootstrap.sh` to create a python virtual environment and install the required node modules.
 
+Once that completes you should be able to run `./scripts/run-server.sh` to start the flask server.
+
+In another terminal, run `./scripts/watch.sh` to compile our CSS and JS down into the `/static` folder and watch for changes.
+
 ## Asset Attribution
 
 * [Bucket by Marek Polakovic from the Noun Project](https://thenounproject.com/marekpolakovic/uploads/?i=394462)
