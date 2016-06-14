@@ -1,0 +1,5 @@
+Options +ExecCGI
+AddHandler fcgid-script .fcgi
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !=/home1/asquared/public_html/emojicanvas/emojicanvas.fcgi
+RewriteRule ^(.*)$ emojicanvas.fcgi/$1 [QSA,L]

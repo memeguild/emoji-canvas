@@ -1,0 +1,425 @@
+@import "../../node_modules/normalize.css/normalize.css";
+
+:root {
+    --border-color: rgba(0,0,0,0.1);
+    --checkered-background-color: rgba(0,0,0,0.02);
+
+
+    --panel-background-color: #efefef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    background: white;
+    font-size: 14px;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+}
+
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 12px;
+    background: var(--panel-background-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+    margin: 2px;
+}
+
+.emoji {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    background-color: transparent;
+    pointer-events: none;
+}
+
+.emoji--selected {
+    background-color: white;
+}
+
+.emoji--stock {
+    background-size: 4100%;
+    background-image: url('../images/sprite-sheet.png');
+}
+
+.emoji--custom {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.controls__buttons {
+    margin-bottom: 20px;
+}
+
+.controls {
+    padding: 20px 10px;
+}
+
+.controls__button {
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.3);
+    margin-bottom: 10px;
+    outline: none;
+    transition: background 100ms ease-out;
+}
+
+.controls__button:not(.controls__button--selected):active {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+.controls__button::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    height: 60%;
+    width: 60%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.controls__button[data-tool="PENCIL"]::after {
+    mask-image: url('../images/pencil.svg');
+}
+
+.controls__button[data-tool="FILL"]::after {
+    mask-image: url('../images/fill.svg');
+}
+
+.controls__button[data-tool="ERASER"]::after {
+    mask-image: url('../images/eraser.svg');
+}
+
+.controls__button[data-tool="EYEDROP"]::after {
+    mask-image: url('../images/dropper.svg');
+}
+
+.controls__button--selected {
+    background: white;
+}
+
+.controls__button::before {
+    content: '';
+    padding-top: 100%;
+    float: left;
+}
+
+.controls__paint {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.controls__paint-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.controls__paint-item-number {
+    display: none;
+}
+
+.controls__paint-item-emoji {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 35px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.controls__paint-item--selected .controls__paint-item-emoji {
+    background: rgba(255, 255, 255, 1);
+}
+
+.emoji-container {
+    display: flex;
+    flex: 1;
+    height: 34vh;
+}
+
+.emoji-container__panel {
+    flex: 1;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.emoji-panel {
+    display: inline;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.canvas {
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+    -webkit-user-select: none;
+}
+
+.canvas--editable {
+    cursor: crosshair;
+}
+
+.canvas__row {
+    display: flex;
+    height: 22px;
+    transition: border-color 200ms ease-out;
+}
+
+.canvas__cell {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    transition: border-color 200ms ease-out;
+}
+
+.canvas__cell--dark {
+    background-color: var(--checkered-background-color);
+}
+
+.canvas__cell--excluded::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    content: '';
+}
+
+.canvas--editable .canvas__cell:not(:last-child) {
+    border-right: 1px solid var(--border-color);
+}
+
+.canvas--editable .canvas__row:not(:last-child) .canvas__cell {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-container,
+.app,
+.app__contents {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.app__contents {
+    display: flex;
+}
+
+.app__panel {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.app__panel--left {
+    width: 65px;
+    height: 100%;
+    background: var(--panel-background-color);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.app__panel--center {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.app__panel--right {
+    width: 300px;
+    background-color: var(--panel-background-color);
+    padding: 10px 0 0 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.app__export-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 40px;
+    width: 40px;
+    background: var(--panel-background-color);
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.app__export-button::after {
+    content: '';
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 60%;
+    background-color: rgba(0,0,0,0.9);
+    mask-image: url('../images/share.svg');
+}
+
+.app__export-dialog {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.palette-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+.palette-panel__palette {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+.palette {
+    flex: 1;
+    overflow: auto;
+    padding-top: 10px;
+}
+
+.palette__emoji {
+    display: inline-block;
+    padding: 0 3px 3px 0;
+    cursor: pointer;
+    transition: all ease-out 100ms;
+    transform-origin: center;
+}
+
+.palette__emoji:hover {
+    transform: scale(1.1);
+}
+
+.palette-panel__search {
+    padding: 10px 20px 10px 10px;
+}
+
+.palette-panel__search-input {
+    display: block;
+    width: 100%;
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    font-size: 15px;
+    line-height: 15px;
+    font-weight: 100;
+    font-family: 'Source Sans Pro', sans-serif;
+    border-radius: 5px;
+}
+
+.export-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.export-dialog,
+.export-dialog__mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.export-dialog__mask {
+    background: rgba(0,0,0, 0.5);
+}
+
+.export-dialog__content {
+    position: relative;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.3);
+    display: flex;
+    overflow: hidden;
+}
+
+.export-dialog__canvas {
+    padding: 10px;
+}
+
+.export-dialog__controls {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 275px;
+    min-height: 100%;
+    background-color: var(--panel-background-color);
+    padding: 10px 10px 20px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.export-dialog__control {
+    padding-top: 10px;
+}
+
+.export-dialog__controls-wrapper {
+    flex: 1;
+}
+
+.export-dialog__input {
+    padding: 5px 10px;
+}
+
+.export-dialog__save-button {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    text-align: center;
+    font-weight: 100;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background: white;
+    border: none;
+    box-shadow: 0 2px rgba(0,0,0,0.2);
+    outline: none;
+    transition-property: transform, box-shadow, background-color, color;
+    transition-duration: 75ms, 75ms, 100ms, 100ms;
+    transition-timing-function: ease-out;
+}
+
+.export-dialog__save-button:active {
+    background: rgba(255,255,255,0.7);
+    transform: translateY(2px);
+    box-shadow: 0 0 rgba(0,0,0,0.2);
+}

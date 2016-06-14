@@ -1,0 +1,5 @@
+config.json
+emojicanvasenv/
+node_modules/
+npm-debug.log
+static/
