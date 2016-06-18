@@ -1,0 +1,102 @@
+.controls {
+    padding: 20px 10px;
+}
+
+.controls__buttons {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.controls__button {
+    position: relative;
+    border-radius: 5px;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.3);
+    outline: none;
+    transition: background 100ms ease-out;
+    border: none;
+}
+
+.controls__button:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.controls__button:not(.controls__button--selected):active {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+.controls__button::before {
+    content: '';
+    padding-top: 100%;
+}
+
+.controls__button::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    height: 60%;
+    width: 60%;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.controls__button[data-tool="PENCIL"]::after {
+    mask-image: url('../images/pencil.svg');
+}
+
+.controls__button[data-tool="FILL"]::after {
+    mask-image: url('../images/fill.svg');
+}
+
+.controls__button[data-tool="ERASER"]::after {
+    mask-image: url('../images/eraser.svg');
+}
+
+.controls__button[data-tool="EYEDROP"]::after {
+    mask-image: url('../images/dropper.svg');
+}
+
+.controls__button--selected {
+    background: white;
+}
+
+.controls__button::before {
+    content: '';
+    padding-top: 100%;
+    float: left;
+}
+
+.controls__paints {
+    display: flex;
+    flex-direction: column;
+}
+
+.controls__paint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.controls__paint::before {
+    content: '';
+    padding-top: 100%;
+}
+
+.controls__paint:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.controls__paint--selected {
+    background: rgba(255, 255, 255, 1);
+}
+
+
+.controls__paint-item-emoji {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

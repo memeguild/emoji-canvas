@@ -12,17 +12,15 @@ export default class Palette extends BaseComponent {
 
     render(){
         return (
-            <div className="palette-panel">
-                <div className="palette-panel__search">
-                    <input className="palette-panel__search-input"
+            <div className="palette">
+                <div className="palette__search">
+                    <input className="palette__search-input"
                             onInput={this._onSearchInput}
                             type="text"
                             placeholder="Search" />
                 </div>
-                <div className="palette-panel__palette">
-                    <div className="palette">
-                        {this._renderEmoji()}
-                    </div>
+                <div className="palette__emojis">
+                    {this._renderEmoji()}
                 </div>
             </div>
         );

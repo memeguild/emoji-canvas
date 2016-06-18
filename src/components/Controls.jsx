@@ -50,8 +50,8 @@ export default class Controls extends BaseComponent {
     }
 
     _renderPaint(index){
-        const classes = classNames('controls__paint-item', {
-            'controls__paint-item--selected':
+        const classes = classNames('controls__paint', {
+            'controls__paint--selected':
                     index === this.props.selectedPaintIndex,
         });
 
@@ -75,7 +75,6 @@ export default class Controls extends BaseComponent {
         return (
             <div className={classes} data-index={index}
                     onMouseDown={this._onPaintClick}>
-                <div className="controls__paint-item-number">{index + 1}</div>
                 <div className="controls__paint-item-emoji">{emoji}</div>
             </div>
         );
